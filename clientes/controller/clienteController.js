@@ -1,4 +1,9 @@
-const {getClientesAll,createNewCliente,MgetOneCliente}=require('./../model/Cliente');
+const {getClientesAll,
+      createNewCliente,
+      MgetOneCliente,
+      MactualizarUnCliente,
+      MeliminarUnCliente
+    }=require('./../model/Cliente');
 const {single,multiple}=require('./../dto/DTOCliente');
 // const Clientes=require('./../services/schemaCliente');
 const boom =require('@hapi/boom');
@@ -16,7 +21,7 @@ const obtenerTodoCliente=async(req,res,next)=>{
 const newCliente=async(req,res,next)=>{
   try {
 
-    const {nombre,apellido,email,telefono,activo}=req.body;
+    const {nombre,apellido,empresa,email,telefono,activo}=req.body;
 
     const existCliente= await MgetOneCliente(email);
 
@@ -28,6 +33,7 @@ const newCliente=async(req,res,next)=>{
     const cliente=await createNewCliente({
       nombre:nombre,
       apellido:apellido,
+      empresa:empresa,
       email:email,
       telefono:telefono,
       activo:activo
@@ -42,5 +48,35 @@ const newCliente=async(req,res,next)=>{
 }
 
 
+const ActualizarCliente = async(req,res,next)=>{
+    const {id}=req.params;
+    const {nombre,apellido,empresa,email,telefono,activo}=req.body;
 
-module.exports={obtenerTodoCliente,newCliente}
+    try{
+       const upCliente= await MactualizarUnCliente(id,{nombre,apellido,empresa,email,telefono,activo});
+
+       return res.status(200).json(single(upCliente));
+
+    }catch(error){
+      next(error);
+    }
+
+}
+
+const EliminarCliente= async(req,res,next)=>{
+  const {id}=req.params;
+  try{
+       await MeliminarUnCliente(id);
+       res.json({
+        "msg":"Se elimino el Cliente Correctamente"
+       })
+   }catch(error){
+     next(error);
+   }
+}
+
+module.exports={obtenerTodoCliente,
+                newCliente,
+                ActualizarCliente,
+                EliminarCliente
+              }

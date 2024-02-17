@@ -2,6 +2,7 @@ const single = (resource) => ({
   id: resource._id,
   nombre: resource.nombre,
   apellido: resource.apellido,
+  empresa: resource.empresa,
   email: resource.email,
   telefono: resource.telefono,
   fechaCreacion: resource.fecha_creacion,

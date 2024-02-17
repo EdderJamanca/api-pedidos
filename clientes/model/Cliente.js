@@ -1,4 +1,9 @@
-const {getClientes,createCliente,getOneCliente}=require('./../dao/DAOCliente');
+const {getClientes,
+      createCliente,
+      getOneCliente,
+      updateCliente,
+      eliminarCliente
+    }=require('./../dao/DAOCliente');
 
 const getClientesAll=(page,limit)=>{
   return getClientes(page,limit);
@@ -12,4 +17,18 @@ const createNewCliente=(body)=>{
 const MgetOneCliente=(email)=>{
   return getOneCliente(email);
 }
-module.exports={getClientesAll,createNewCliente,MgetOneCliente};
+
+const MactualizarUnCliente=(id,data)=>{
+  return updateCliente(id,data);
+}
+
+const MeliminarUnCliente=(id)=>{
+    return eliminarCliente(id);
+}
+module.exports={
+          getClientesAll,
+          createNewCliente,
+          MgetOneCliente,
+          MactualizarUnCliente,
+          MeliminarUnCliente
+        };

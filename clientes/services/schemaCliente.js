@@ -12,6 +12,10 @@ const clientesSchema=new Schema({
         trim:true,
         require:true
     },
+    empresa:{
+      type:String,
+      trim:true
+    },
     email:{
         type:String,
         unique:true,
